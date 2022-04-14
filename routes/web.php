@@ -22,37 +22,32 @@ use Illuminate\Support\Facades\Route;
 //     return view('welcome');
 // });
 
-Route::get(
-    '/',
-    function () {
-        $strHome = 'home';
-        return view('home', [
-            'active' => "$strHome",
-            'title' => 'Home',
-        ]);
-    }
+Route::get("/", function () {
+    $strHome = "home";
+    return view("home", [
+        "active" => "$strHome",
+        "title" => "Home",
+    ]);
+});
+
+Route::get("/about", function () {
+    return view("about", [
+        "active" => "about",
+        "title" => "About",
+        "name" => "nico",
+        "email" => "Wazir Qorni Abud",
+        "image" => "me.jpg",
+    ]);
+});
+
+Route::get("/login", [LoginController::class, "index"])->middleware("guest");
+Route::get("/register", [RegisterController::class, "index"])->middleware(
+    "guest"
+);
+Route::get("/dashboard", [DashboardController::class, "index"])->middleware(
+    "auth"
 );
 
-Route::get(
-    '/about',
-    function () {
-        return view('about', [
-            'active' => 'about',
-            'title' => 'About',
-            'name' => 'Rezky',
-            'email' => 'rzk84.rezky@gmail.com',
-            'image' => 'me.jpg',
-        ]);
-    }
-);
-
-Route::get('/posts', [PostController::class, 'index']);
-Route::get('/post/{post:slug}', [PostController::class, 'show']);
-Route::get('/categories', [CategoryController::class, 'index']);
-Route::get('/login', [LoginController::class, 'index'])->middleware('guest');
-Route::get('/register', [RegisterController::class, 'index'])->middleware('guest');
-Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('auth');
-
-Route::post('/login', [LoginController::class, 'authenticate'])->name('login');
-Route::post('/logout', [LoginController::class, 'logout']);
-Route::post('/register', [RegisterController::class, 'store']);
+Route::post("/login", [LoginController::class, "authenticate"])->name("login");
+Route::post("/logout", [LoginController::class, "logout"]);
+Route::post("/register", [RegisterController::class, "store"]);
