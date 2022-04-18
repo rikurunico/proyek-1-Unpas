@@ -47,7 +47,13 @@ Route::get("/register", [RegisterController::class, "index"])->middleware(
 Route::get("/dashboard", [DashboardController::class, "index"])->middleware(
     "auth"
 );
-
+Route::get("/dashboard/edit", [DashboardController::class, "edit"])->middleware(
+    "auth"
+);
+Route::post("/dashboard/update/{id}", [
+    DashboardController::class,
+    "update",
+])->middleware("auth");
 Route::post("/login", [LoginController::class, "authenticate"])->name("login");
 Route::post("/logout", [LoginController::class, "logout"]);
 Route::post("/register", [RegisterController::class, "store"]);

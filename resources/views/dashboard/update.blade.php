@@ -7,28 +7,8 @@
     <p>Selamat datang di halaman dashboard</p>
     <br>
 </div>
-
-{{-- <div class="row">
-    <div class="col-sm-3">
-        <img src="https://github.com/rikurunico/rikurunico.github.io/blob/master/assets/img/pic.png?raw=true" width="200" class="img-thumbnail rounded-circle">
-    </div>
-    <div class="col-md-6">
-        @if (auth()->user())
-        <h5>Nama  : {{ auth()->user()->name }}</h5>
-        <h5>Email : {{ auth()->user()->email }}</h5>
-        @else
-        <h3>Welcome to my blog</h3>
-        @endif
-    </div>
-
-</div> --}}
 <div class="container-xl px-4 mt-4">
     <hr class="mt-0 mb-4">
-        @if (session()->has('success'))
-        <div class="alert alert-success">
-            {{ session('success') }}
-        </div>
-        @endif
     <div class="row">
         <div class="col-xl-4">
             <!-- Profile picture card-->
@@ -49,22 +29,23 @@
             <div class="card mb-4">
                 <div class="card-header">Account Details</div>
                 <div class="card-body">
-                    <form>
+                    <form action="{{ url("dashboard/update/" .auth()->user()->id) }}" method="POST">
+                        @csrf
                         <div class="mb-3">
                             <label class="small mb-1" for="Username">Username</label>
-                            <input  disabled name="Username" class="form-control" value="{{ auth()->user()->username }}">
+                            <input name="Username" class="form-control" value="{{ auth()->user()->username }}">
                         </div>
                         <!-- Form Group (username)-->
                         <div class="mb-3">
                             <label class="small mb-1" for="inputUsername">name</label>
-                            <input disabled class="form-control" value="{{ auth()->user()->name }}">
+                            <input name="Name" class="form-control" value="{{ auth()->user()->name }}">
                         </div>
                         <!-- Form Group (email address)-->
                         <div class="mb-3">
                             <label class="small mb-1" for="inputEmailAddress">Email address</label>
-                            <input disabled class="form-control"value="{{ auth()->user()->email }}">
+                            <input name="Email" class="form-control"value="{{ auth()->user()->email }}">
                         </div>
-                        <a class="btn btn-warning" href="{{url("dashboard/edit")}}" >Edit Profile</a>
+                        <button class="btn btn-primary" type="submit" >Edit Profile</button>
                     </form>
                 </div>
             </div>
